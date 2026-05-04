@@ -60,22 +60,22 @@ const resetDemoData = async () => {
     </div>
     <nav class="mt-3 flex gap-2 overflow-x-auto lg:hidden">
       <RouterLink
-        class="rounded-md px-3 py-2 text-sm font-semibold text-slate-600"
-        active-class="bg-blue-50 text-brand"
+        class="nav-link rounded-md px-3 py-2 text-sm font-semibold text-slate-600"
+        active-class="nav-link-active bg-blue-50 text-brand"
         to="/dashboard"
       >
         Dashboard
       </RouterLink>
       <RouterLink
-        class="rounded-md px-3 py-2 text-sm font-semibold text-slate-600"
-        active-class="bg-blue-50 text-brand"
+        class="nav-link rounded-md px-3 py-2 text-sm font-semibold text-slate-600"
+        active-class="nav-link-active bg-blue-50 text-brand"
         to="/jobs"
       >
         Vagas
       </RouterLink>
       <RouterLink
-        class="rounded-md px-3 py-2 text-sm font-semibold text-slate-600"
-        active-class="bg-blue-50 text-brand"
+        class="nav-link rounded-md px-3 py-2 text-sm font-semibold text-slate-600"
+        active-class="nav-link-active bg-blue-50 text-brand"
         to="/profile"
       >
         Perfil

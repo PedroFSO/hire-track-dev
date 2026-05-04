@@ -23,9 +23,9 @@ withDefaults(
     :disabled="disabled || loading"
     class="focus-ring inline-flex min-h-10 items-center justify-center gap-2 rounded-md px-4 py-2 text-sm font-semibold transition disabled:cursor-not-allowed disabled:opacity-60"
     :class="{
-      'bg-brand text-white hover:bg-blue-700': variant === 'primary',
-      'border border-slate-200 bg-white text-slate-700 hover:bg-slate-50': variant === 'secondary',
-      'text-slate-600 hover:bg-slate-100': variant === 'ghost',
+      'button-primary bg-brand text-white hover:bg-blue-700': variant === 'primary',
+      'button-secondary border border-slate-200 bg-white text-slate-700 hover:bg-slate-50': variant === 'secondary',
+      'button-ghost text-slate-600 hover:bg-slate-100': variant === 'ghost',
       'bg-red-600 text-white hover:bg-red-700': variant === 'danger',
     }"
   >
