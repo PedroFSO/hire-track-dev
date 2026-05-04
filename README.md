@@ -9,7 +9,8 @@ Frontend em Vue 3 para gerenciamento profissional de candidaturas em vagas de te
 
 ## Demonstração
 
-- Deploy: publique na Vercel ou Netlify e coloque a URL aqui.
+- Deploy: https://hire-track-dev.vercel.app
+- Login demo: https://hire-track-dev.vercel.app/login?redirect=/dashboard
 - E-mail demo: `ana@hiretrack.dev`
 - Senha demo: `123456`
 
@@ -83,12 +84,11 @@ O GitHub Actions roda formatação, lint, testes unitários, build, E2E e captur
 
 ## Deploy
 
-Vercel e Netlify já estão configurados:
+O projeto está publicado na Vercel:
 
-- `vercel.json`
-- `netlify.toml`
+- Produção: https://hire-track-dev.vercel.app
 
-Ambos usam `npm run build` e publicam `dist`.
+Também há configuração para Netlify em `netlify.toml`.
 
 ## Docker
 
