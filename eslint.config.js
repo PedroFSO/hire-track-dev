@@ -40,6 +40,7 @@ export default [
         console: 'readonly',
         document: 'readonly',
         localStorage: 'readonly',
+        KeyboardEvent: 'readonly',
         process: 'readonly',
         setTimeout: 'readonly',
         URL: 'readonly',

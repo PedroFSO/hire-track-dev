@@ -260,6 +260,10 @@ textarea {
   color: var(--ht-text);
 }
 
+[data-theme='dark'] .command-item:hover {
+  background-color: var(--ht-surface-hover);
+}
+
 [data-theme='dark'] .status-empty,
 [data-theme='dark'] .status-saved,
 [data-theme='dark'] .status-applied,

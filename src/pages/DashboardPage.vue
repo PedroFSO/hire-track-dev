@@ -4,16 +4,20 @@ import { onMounted } from 'vue';
 import ApplicationKanban from '@/components/ApplicationKanban.vue';
 import DashboardCard from '@/components/DashboardCard.vue';
 import DashboardCharts from '@/components/DashboardCharts.vue';
+import DashboardInsights from '@/components/DashboardInsights.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
 import { useApplications } from '@/composables/useApplications';
 import { useJobs } from '@/composables/useJobs';
+import { exportApplicationsCsv } from '@/utils/csv';
 
-const { stats, loading, error, fetchStats } = useApplications();
+const { applications, stats, loading, error, fetchApplications, fetchStats } = useApplications();
 const { jobs, fetchJobs } = useJobs();
 
 onMounted(async () => {
-  await Promise.all([fetchStats(), fetchJobs({})]);
+  await Promise.all([fetchStats(), fetchApplications(), fetchJobs({})]);
 });
+
+const exportCsv = () => exportApplicationsCsv(jobs.value, applications.value);
 </script>
 
 <template>
@@ -23,9 +27,18 @@ onMounted(async () => {
         <h1 class="text-2xl font-bold text-ink">Dashboard</h1>
         <p class="mt-1 text-sm text-slate-500">Resumo atualizado das suas candidaturas.</p>
       </div>
-      <RouterLink class="rounded-md bg-brand px-4 py-2 text-sm font-semibold text-white hover:bg-blue-700" to="/jobs">
-        Ver vagas
-      </RouterLink>
+      <div class="flex flex-wrap gap-2">
+        <button
+          type="button"
+          class="focus-ring rounded-md border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50"
+          @click="exportCsv"
+        >
+          Exportar CSV
+        </button>
+        <RouterLink class="rounded-md bg-brand px-4 py-2 text-sm font-semibold text-white hover:bg-blue-700" to="/jobs">
+          Ver vagas
+        </RouterLink>
+      </div>
     </div>
     <p v-if="error" class="mb-4 rounded-md bg-red-50 px-3 py-2 text-sm text-red-700">{{ error }}</p>
     <div v-if="loading" class="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
@@ -61,6 +74,7 @@ onMounted(async () => {
         tone="red"
       />
     </div>
+    <DashboardInsights v-if="!loading" :stats="stats" :applications="applications" />
     <DashboardCharts v-if="!loading" :stats="stats" :jobs="jobs" />
     <ApplicationKanban v-if="!loading" :jobs="jobs.filter((job) => job.applicationStatus)" />
   </AppLayout>

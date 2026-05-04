@@ -13,6 +13,8 @@ test('login, dashboard, listagem, salvar vaga e alterar status', async ({ page }
   await expect(page).toHaveURL(/dashboard/);
   await expect(page.getByRole('heading', { name: 'Dashboard' })).toBeVisible();
   await expect(page.getByText('Vagas salvas', { exact: true })).toBeVisible();
+  await expect(page.getByText('Taxa de aplicação')).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Exportar CSV' })).toBeVisible();
 
   await page.getByRole('link', { name: 'Vagas' }).first().click();
   await expect(page).toHaveURL(/jobs/);
@@ -42,6 +44,18 @@ test('filtros podem ser limpos pela listagem de vagas', async ({ page }) => {
 
   await expect(page.getByLabel('Stack')).toHaveValue('');
   await expect(page.getByText('Junior Vue Developer')).toBeVisible();
+});
+
+test('command palette abre com atalho e navega', async ({ page }) => {
+  await page.goto('/login');
+  await page.getByRole('button', { name: 'Entrar' }).click();
+
+  await page.keyboard.press(process.platform === 'darwin' ? 'Meta+K' : 'Control+K');
+  await expect(page.getByRole('dialog', { name: 'Command palette' })).toBeVisible();
+  await page.getByPlaceholder('Buscar comando...').fill('perfil');
+  await page.getByRole('button', { name: /Ir para Perfil/ }).click();
+
+  await expect(page).toHaveURL(/profile/);
 });
 
 test('perfil editável, tema e reset demo funcionam', async ({ page }) => {

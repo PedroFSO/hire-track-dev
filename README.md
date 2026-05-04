@@ -26,13 +26,17 @@ Frontend em Vue 3 para gerenciamento profissional de candidaturas em vagas de te
 - Expiração de sessão após 8 horas.
 - Rotas públicas, privadas e página 404.
 - Dashboard com métricas e Kanban de candidaturas.
+- Métricas avançadas: taxas, próxima entrevista e última atualização.
 - Listagem de vagas com filtros, busca com debounce e ordenação.
+- Command palette com `Ctrl+K`.
+- Exportação de candidaturas em CSV.
 - Favoritos com confirmação de remoção.
 - Notas por candidatura, data da próxima entrevista, contato e histórico de status.
 - Feedback visual com toasts.
 - Validação de formulários com Zod.
 - MSW opcional para simular fronteira HTTP em desenvolvimento.
 - Testes unitários, E2E e acessibilidade com axe.
+- Storybook para documentação de componentes.
 - Configuração para Vercel, Netlify, Docker e GitHub Actions.
 
 ## Stack
@@ -78,6 +82,8 @@ npm run test
 npm run build
 npm run test:e2e
 npm run screenshots
+npm run storybook
+npm run build:storybook
 ```
 
 O GitHub Actions roda formatação, lint, testes unitários, build, E2E e captura screenshots como artefato.
