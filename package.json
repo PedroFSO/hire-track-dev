@@ -1,0 +1,65 @@
+{
+  "name": "hiretrack-dev",
+  "version": "1.1.0",
+  "description": "Frontend Vue 3 para gerenciamento profissional de candidaturas em vagas de tecnologia.",
+  "private": true,
+  "license": "MIT",
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "dev": "vite --host 0.0.0.0",
+    "build": "vue-tsc -b && vite build",
+    "preview": "vite preview --host 0.0.0.0",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:e2e": "playwright test",
+    "test:a11y": "playwright test --grep acessibilidade",
+    "screenshots": "node scripts/capture-screenshots.mjs"
+  },
+  "dependencies": {
+    "@vitejs/plugin-vue": "^5.2.4",
+    "graphql": "^16.11.0",
+    "lucide-vue-next": "^0.468.0",
+    "pinia": "^2.3.1",
+    "vue": "^3.5.13",
+    "vue-router": "^4.5.0",
+    "zod": "^4.4.1"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "^4.11.3",
+    "@eslint/js": "^10.0.1",
+    "@playwright/test": "^1.49.1",
+    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/user-event": "^14.6.1",
+    "@testing-library/vue": "^8.1.0",
+    "@types/node": "^22.10.2",
+    "@vue/test-utils": "^2.4.6",
+    "@vue/tsconfig": "^0.7.0",
+    "autoprefixer": "^10.4.20",
+    "eslint": "^10.2.1",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-vue": "^10.9.0",
+    "jsdom": "^25.0.1",
+    "msw": "^2.14.2",
+    "postcss": "^8.4.49",
+    "prettier": "^3.8.3",
+    "tailwindcss": "^3.4.17",
+    "typescript": "~5.6.3",
+    "typescript-eslint": "^8.59.1",
+    "vite": "^5.4.11",
+    "vitest": "^2.1.8",
+    "vue-eslint-parser": "^10.4.0",
+    "vue-tsc": "^2.2.0",
+    "wait-on": "^8.0.5"
+  },
+  "msw": {
+    "workerDirectory": [
+      "public"
+    ]
+  }
+}
