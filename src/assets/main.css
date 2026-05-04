@@ -15,10 +15,16 @@
     sans-serif;
 }
 
+:root[data-theme='dark'] {
+  color: #e5edf7;
+  background: #0f172a;
+}
+
 body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
+  background: inherit;
 }
 
 button,
@@ -30,4 +36,48 @@ textarea {
 
 .focus-ring {
   @apply focus:outline-none focus:ring-2 focus:ring-brand/30 focus:ring-offset-2;
+}
+
+[data-theme='dark'] .bg-white {
+  background-color: #111827;
+}
+
+[data-theme='dark'] .bg-slate-50 {
+  background-color: #0f172a;
+}
+
+[data-theme='dark'] .bg-slate-100 {
+  background-color: #1f2937;
+}
+
+[data-theme='dark'] .bg-slate-200 {
+  background-color: #334155;
+}
+
+[data-theme='dark'] .border-slate-200,
+[data-theme='dark'] .border-slate-300 {
+  border-color: #334155;
+}
+
+[data-theme='dark'] .text-ink,
+[data-theme='dark'] .text-slate-900,
+[data-theme='dark'] .text-slate-700,
+[data-theme='dark'] .text-slate-600 {
+  color: #e5edf7;
+}
+
+[data-theme='dark'] .text-slate-500 {
+  color: #94a3b8;
+}
+
+[data-theme='dark'] .shadow-soft {
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.28);
+}
+
+[data-theme='dark'] input,
+[data-theme='dark'] select,
+[data-theme='dark'] textarea {
+  background-color: #0f172a;
+  border-color: #334155;
+  color: #e5edf7;
 }

@@ -1,15 +1,28 @@
 <script setup lang="ts">
-import { LogOut } from 'lucide-vue-next';
+import { LogOut, Moon, RotateCcw, Sun } from 'lucide-vue-next';
 import { useRouter } from 'vue-router';
 import BaseButton from './BaseButton.vue';
 import { useAuth } from '@/composables/useAuth';
+import { useTheme } from '@/composables/useTheme';
+import { useToast } from '@/composables/useToast';
+import { graphQLClient } from '@/graphql/client';
 
 const router = useRouter();
 const { user, logout } = useAuth();
+const { isDark, toggleTheme } = useTheme();
+const { showToast } = useToast();
 
 const handleLogout = async () => {
   logout();
   await router.push('/login');
+};
+
+const resetDemoData = async () => {
+  if (!window.confirm('Restaurar os dados demo? Suas alterações locais de candidatura serão apagadas.')) return;
+
+  graphQLClient.resetDemoData();
+  showToast('Dados demo restaurados.', 'success');
+  await router.go(0);
 };
 </script>
 
@@ -26,6 +39,19 @@ const handleLogout = async () => {
       </div>
       <div class="flex items-center gap-2">
         <span class="hidden text-sm text-slate-500 sm:inline">{{ user?.mainStack }}</span>
+        <BaseButton
+          variant="ghost"
+          :aria-label="isDark ? 'Ativar tema claro' : 'Ativar tema escuro'"
+          @click="toggleTheme"
+        >
+          <Sun v-if="isDark" class="h-4 w-4" />
+          <Moon v-else class="h-4 w-4" />
+          <span class="hidden sm:inline">{{ isDark ? 'Claro' : 'Escuro' }}</span>
+        </BaseButton>
+        <BaseButton variant="ghost" aria-label="Restaurar dados demo" @click="resetDemoData">
+          <RotateCcw class="h-4 w-4" />
+          <span class="hidden sm:inline">Reset demo</span>
+        </BaseButton>
         <BaseButton variant="ghost" aria-label="Sair" @click="handleLogout">
           <LogOut class="h-4 w-4" />
           Sair

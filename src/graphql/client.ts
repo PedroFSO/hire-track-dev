@@ -160,6 +160,10 @@ export const graphQLClient = {
     localStorage.removeItem(USER_KEY);
   },
 
+  resetDemoData() {
+    localStorage.removeItem(APPLICATIONS_KEY);
+  },
+
   async getJobs(filters: JobFilters = {}): Promise<JobWithApplication[]> {
     await delay();
     requireSession();
@@ -254,6 +258,23 @@ export const graphQLClient = {
 
     setApplications(next);
     return nextApplication;
+  },
+
+  async updateProfile(input: Pick<User, 'name' | 'location' | 'mainStack'>): Promise<User> {
+    await delay();
+    requireSession();
+    const current = readJson<User | null>(USER_KEY, null);
+
+    if (!current) {
+      throw new Error('Sessão expirada. Faça login novamente.');
+    }
+
+    const nextUser: User = {
+      ...current,
+      ...input,
+    };
+    writeJson(USER_KEY, nextUser);
+    return nextUser;
   },
 
   async getDashboardStats(): Promise<DashboardStats> {

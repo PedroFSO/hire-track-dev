@@ -3,6 +3,7 @@ import { Bookmark, CalendarCheck, Send, XCircle } from 'lucide-vue-next';
 import { onMounted } from 'vue';
 import ApplicationKanban from '@/components/ApplicationKanban.vue';
 import DashboardCard from '@/components/DashboardCard.vue';
+import DashboardCharts from '@/components/DashboardCharts.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
 import { useApplications } from '@/composables/useApplications';
 import { useJobs } from '@/composables/useJobs';
@@ -60,6 +61,7 @@ onMounted(async () => {
         tone="red"
       />
     </div>
+    <DashboardCharts v-if="!loading" :stats="stats" :jobs="jobs" />
     <ApplicationKanban v-if="!loading" :jobs="jobs.filter((job) => job.applicationStatus)" />
   </AppLayout>
 </template>

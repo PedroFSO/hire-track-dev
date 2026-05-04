@@ -44,6 +44,23 @@ test('filtros podem ser limpos pela listagem de vagas', async ({ page }) => {
   await expect(page.getByText('Junior Vue Developer')).toBeVisible();
 });
 
+test('perfil editável, tema e reset demo funcionam', async ({ page }) => {
+  await page.goto('/login');
+  await page.getByRole('button', { name: 'Entrar' }).click();
+
+  await page.getByRole('button', { name: 'Ativar tema escuro' }).click();
+  await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
+
+  await page.getByRole('link', { name: 'Perfil' }).first().click();
+  await page.getByLabel('Nome').fill('Ana Demo');
+  await page.getByRole('button', { name: 'Salvar perfil' }).click();
+  await expect(page.getByText('Perfil atualizado.')).toBeVisible();
+  await expect(page.getByText('Ana Demo')).toBeVisible();
+
+  page.once('dialog', (dialog) => dialog.accept());
+  await page.getByRole('button', { name: 'Restaurar dados demo' }).click();
+});
+
 test('páginas principais não têm violações críticas de acessibilidade', async ({ page }) => {
   await page.goto('/login');
   await page.getByRole('button', { name: 'Entrar' }).click();

@@ -63,11 +63,25 @@ export const useAuthStore = defineStore('auth', () => {
     }
   };
 
+  const updateProfile = async (input: Pick<User, 'name' | 'location' | 'mainStack'>) => {
+    loading.value = true;
+    error.value = null;
+
+    try {
+      user.value = await graphQLClient.updateProfile(input);
+    } catch (err) {
+      error.value = err instanceof Error ? err.message : 'Falha ao atualizar perfil.';
+      throw err;
+    } finally {
+      loading.value = false;
+    }
+  };
+
   const logout = () => {
     graphQLClient.logout();
     user.value = null;
     token.value = null;
   };
 
-  return { user, token, loading, error, isAuthenticated, hydrate, login, register, logout };
+  return { user, token, loading, error, isAuthenticated, hydrate, login, register, updateProfile, logout };
 });

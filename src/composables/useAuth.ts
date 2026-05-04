@@ -14,6 +14,7 @@ export const useAuth = () => {
     hydrate: store.hydrate,
     login: store.login,
     register: store.register,
+    updateProfile: store.updateProfile,
     logout: store.logout,
   };
 };
