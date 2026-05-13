@@ -16,7 +16,7 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "test": "vitest run",
-    "test:coverage": "vitest run --coverage",
+    "test:coverage": "vitest run --coverage --reporter=default",
     "test:watch": "vitest",
     "test:e2e": "node scripts/run-e2e.mjs",
     "test:a11y": "node scripts/run-e2e.mjs --grep acessibilidade",
