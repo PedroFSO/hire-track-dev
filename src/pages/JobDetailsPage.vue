@@ -2,6 +2,7 @@
 import { Bookmark } from 'lucide-vue-next';
 import { computed, onMounted, reactive, watch } from 'vue';
 import { useRoute } from 'vue-router';
+import AppErrorState from '@/components/AppErrorState.vue';
 import BaseButton from '@/components/BaseButton.vue';
 import BaseInput from '@/components/BaseInput.vue';
 import BaseSelect from '@/components/BaseSelect.vue';
@@ -85,7 +86,7 @@ onMounted(async () => {
 <template>
   <AppLayout>
     <div v-if="loading" class="h-96 animate-pulse rounded-lg bg-slate-200" />
-    <p v-else-if="error" class="rounded-md bg-red-50 px-3 py-2 text-sm text-red-700">{{ error }}</p>
+    <AppErrorState v-else-if="error" :message="error" />
     <article v-else-if="selectedJob" class="rounded-lg border border-slate-200 bg-white p-6 shadow-soft">
       <div class="flex flex-col justify-between gap-5 md:flex-row md:items-start">
         <div>

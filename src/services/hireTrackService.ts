@@ -1,26 +1,27 @@
 import { graphQLClient, storageKeys } from '@/graphql/client';
+import type { HireTrackService } from '@/services/contracts';
 
-export const hireTrackService = {
+export const hireTrackService: HireTrackService = {
   auth: {
     storageKeys,
-    login: graphQLClient.login,
-    register: graphQLClient.register,
-    me: graphQLClient.me,
-    logout: graphQLClient.logout,
-    updateProfile: graphQLClient.updateProfile,
+    login: (input) => graphQLClient.login(input),
+    register: (input) => graphQLClient.register(input),
+    me: () => graphQLClient.me(),
+    logout: () => graphQLClient.logout(),
+    updateProfile: (input) => graphQLClient.updateProfile(input),
   },
   jobs: {
-    getJobs: graphQLClient.getJobs,
-    getJob: graphQLClient.getJob,
-    toggleFavorite: graphQLClient.toggleFavorite,
+    getJobs: (filters) => graphQLClient.getJobs(filters),
+    getJob: (id) => graphQLClient.getJob(id),
+    toggleFavorite: (jobId) => graphQLClient.toggleFavorite(jobId),
   },
   applications: {
-    getApplications: graphQLClient.getApplications,
-    getDashboardStats: graphQLClient.getDashboardStats,
-    updateApplicationStatus: graphQLClient.updateApplicationStatus,
-    updateApplicationDetails: graphQLClient.updateApplicationDetails,
+    getApplications: () => graphQLClient.getApplications(),
+    getDashboardStats: () => graphQLClient.getDashboardStats(),
+    updateApplicationStatus: (jobId, status) => graphQLClient.updateApplicationStatus(jobId, status),
+    updateApplicationDetails: (jobId, input) => graphQLClient.updateApplicationDetails(jobId, input),
   },
   demo: {
-    resetDemoData: graphQLClient.resetDemoData,
+    resetDemoData: () => graphQLClient.resetDemoData(),
   },
 };

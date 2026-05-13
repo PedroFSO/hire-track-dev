@@ -15,5 +15,16 @@ export default defineConfig({
     setupFiles: './src/tests/setup.ts',
     css: true,
     exclude: ['node_modules', 'dist', 'e2e', 'storybook-static'],
+    coverage: {
+      provider: 'v8',
+      reporter: ['text', 'json-summary', 'html'],
+      reportsDirectory: './coverage',
+      thresholds: {
+        statements: 50,
+        branches: 20,
+        functions: 35,
+        lines: 50,
+      },
+    },
   },
 });

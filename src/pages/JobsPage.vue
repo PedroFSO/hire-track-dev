@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { computed, onMounted, onUnmounted, reactive } from 'vue';
 import BaseButton from '@/components/BaseButton.vue';
+import AppEmptyState from '@/components/AppEmptyState.vue';
+import AppErrorState from '@/components/AppErrorState.vue';
 import BaseInput from '@/components/BaseInput.vue';
 import BaseSelect from '@/components/BaseSelect.vue';
 import JobCard from '@/components/JobCard.vue';
@@ -127,15 +129,19 @@ onUnmounted(() => {
         </BaseButton>
       </div>
     </section>
-    <p v-if="error" class="mb-4 rounded-md bg-red-50 px-3 py-2 text-sm text-red-700">{{ error }}</p>
+    <AppErrorState v-if="error" class="mb-4" :message="error" />
     <div v-if="loading" class="space-y-4">
       <div v-for="item in 3" :key="item" class="h-48 animate-pulse rounded-lg bg-slate-200" />
     </div>
     <div v-else-if="hasJobs" class="space-y-4">
       <JobCard v-for="job in jobs" :key="job.id" :job="job" @favorite="handleFavorite" />
     </div>
-    <div v-else class="rounded-lg border border-dashed border-slate-300 bg-white p-10 text-center text-slate-500">
-      Nenhuma vaga encontrada com os filtros atuais.
-    </div>
+    <AppEmptyState
+      v-else
+      title="Nenhuma vaga encontrada"
+      description="Ajuste os filtros ou acompanhe novas oportunidades para preencher esta lista."
+    >
+      <BaseButton v-if="hasActiveFilters" variant="secondary" @click="clearFilters">Limpar filtros</BaseButton>
+    </AppEmptyState>
   </AppLayout>
 </template>
