@@ -32,6 +32,9 @@ jobs:
           restore-keys: |
             playwright-${{ runner.os }}-
 
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps chromium
+
       - name: Check formatting
         run: npm run format:check
 
@@ -66,19 +69,17 @@ jobs:
         run: npm run lhci
 
       - name: Upload Lighthouse report
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: lighthouse-report
           path: .lighthouseci/
 
-      - name: Install Playwright browsers
-        run: npx playwright install --with-deps chromium
-
       - name: Run E2E tests
         run: npm run test:e2e
 
       - name: Upload Playwright report on failure
-        if: failure()
+        if: failure() && hashFiles('playwright-report/**') != ''
         uses: actions/upload-artifact@v4
         with:
           name: playwright-report
