@@ -3,7 +3,7 @@ import { computed, onMounted, onUnmounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useTheme } from '@/composables/useTheme';
 import { useToast } from '@/composables/useToast';
-import { graphQLClient } from '@/graphql/client';
+import { hireTrackService } from '@/services/hireTrackService';
 
 const router = useRouter();
 const { toggleTheme } = useTheme();
@@ -20,7 +20,7 @@ const commands = [
     label: 'Restaurar dados demo',
     hint: 'Dados',
     action: () => {
-      graphQLClient.resetDemoData();
+      hireTrackService.demo.resetDemoData();
       showToast('Dados demo restaurados.', 'success');
       router.go(0);
     },

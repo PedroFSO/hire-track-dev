@@ -11,6 +11,7 @@ export default [
       'node_modules/**',
       'coverage/**',
       'playwright-report/**',
+      'storybook-static/**',
       'test-results/**',
       '*.log',
       'postcss.config.cjs',

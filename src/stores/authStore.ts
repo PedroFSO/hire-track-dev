@@ -1,11 +1,11 @@
 import { defineStore } from 'pinia';
 import { computed, ref } from 'vue';
-import { graphQLClient, storageKeys } from '@/graphql/client';
+import { hireTrackService } from '@/services/hireTrackService';
 import type { LoginInput, RegisterInput, User } from '@/types';
 
 export const useAuthStore = defineStore('auth', () => {
   const user = ref<User | null>(null);
-  const token = ref<string | null>(localStorage.getItem(storageKeys.token));
+  const token = ref<string | null>(localStorage.getItem(hireTrackService.auth.storageKeys.token));
   const loading = ref(false);
   const error = ref<string | null>(null);
 
@@ -21,7 +21,7 @@ export const useAuthStore = defineStore('auth', () => {
     error.value = null;
 
     try {
-      const session = await graphQLClient.me();
+      const session = await hireTrackService.auth.me();
       if (session) {
         setSession(session);
       } else {
@@ -40,7 +40,7 @@ export const useAuthStore = defineStore('auth', () => {
     error.value = null;
 
     try {
-      setSession(await graphQLClient.login(input));
+      setSession(await hireTrackService.auth.login(input));
     } catch (err) {
       error.value = err instanceof Error ? err.message : 'Falha ao entrar.';
       throw err;
@@ -54,7 +54,7 @@ export const useAuthStore = defineStore('auth', () => {
     error.value = null;
 
     try {
-      setSession(await graphQLClient.register(input));
+      setSession(await hireTrackService.auth.register(input));
     } catch (err) {
       error.value = err instanceof Error ? err.message : 'Falha ao cadastrar.';
       throw err;
@@ -68,7 +68,7 @@ export const useAuthStore = defineStore('auth', () => {
     error.value = null;
 
     try {
-      user.value = await graphQLClient.updateProfile(input);
+      user.value = await hireTrackService.auth.updateProfile(input);
     } catch (err) {
       error.value = err instanceof Error ? err.message : 'Falha ao atualizar perfil.';
       throw err;
@@ -78,7 +78,7 @@ export const useAuthStore = defineStore('auth', () => {
   };
 
   const logout = () => {
-    graphQLClient.logout();
+    hireTrackService.auth.logout();
     user.value = null;
     token.value = null;
   };

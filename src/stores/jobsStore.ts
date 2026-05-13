@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 import { computed, ref } from 'vue';
-import { graphQLClient } from '@/graphql/client';
+import { hireTrackService } from '@/services/hireTrackService';
 import type { JobFilters, JobWithApplication } from '@/types';
 
 export const useJobsStore = defineStore('jobs', () => {
@@ -19,7 +19,7 @@ export const useJobsStore = defineStore('jobs', () => {
     filters.value = nextFilters;
 
     try {
-      jobs.value = await graphQLClient.getJobs(nextFilters);
+      jobs.value = await hireTrackService.jobs.getJobs(nextFilters);
     } catch (err) {
       error.value = err instanceof Error ? err.message : 'Falha ao carregar vagas.';
     } finally {
@@ -32,7 +32,7 @@ export const useJobsStore = defineStore('jobs', () => {
     error.value = null;
 
     try {
-      selectedJob.value = await graphQLClient.getJob(id);
+      selectedJob.value = await hireTrackService.jobs.getJob(id);
     } catch (err) {
       error.value = err instanceof Error ? err.message : 'Falha ao carregar vaga.';
     } finally {
@@ -41,7 +41,7 @@ export const useJobsStore = defineStore('jobs', () => {
   };
 
   const refreshJobState = async (jobId: string) => {
-    const updated = await graphQLClient.getJob(jobId);
+    const updated = await hireTrackService.jobs.getJob(jobId);
     jobs.value = jobs.value.map((job) => (job.id === jobId ? updated : job));
     if (selectedJob.value?.id === jobId) selectedJob.value = updated;
   };
@@ -49,7 +49,7 @@ export const useJobsStore = defineStore('jobs', () => {
   const toggleFavorite = async (jobId: string) => {
     error.value = null;
     try {
-      await graphQLClient.toggleFavorite(jobId);
+      await hireTrackService.jobs.toggleFavorite(jobId);
       await refreshJobState(jobId);
     } catch (err) {
       error.value = err instanceof Error ? err.message : 'Falha ao salvar vaga.';

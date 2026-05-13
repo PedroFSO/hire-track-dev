@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
-import { graphQLClient } from '@/graphql/client';
+import { hireTrackService } from '@/services/hireTrackService';
 import type { Application, ApplicationStatus, DashboardStats } from '@/types';
 
 export const useApplicationsStore = defineStore('applications', () => {
@@ -14,7 +14,7 @@ export const useApplicationsStore = defineStore('applications', () => {
     error.value = null;
 
     try {
-      applications.value = await graphQLClient.getApplications();
+      applications.value = await hireTrackService.applications.getApplications();
     } catch (err) {
       error.value = err instanceof Error ? err.message : 'Falha ao carregar candidaturas.';
     } finally {
@@ -27,7 +27,7 @@ export const useApplicationsStore = defineStore('applications', () => {
     error.value = null;
 
     try {
-      stats.value = await graphQLClient.getDashboardStats();
+      stats.value = await hireTrackService.applications.getDashboardStats();
     } catch (err) {
       error.value = err instanceof Error ? err.message : 'Falha ao carregar métricas.';
     } finally {
@@ -39,7 +39,7 @@ export const useApplicationsStore = defineStore('applications', () => {
     error.value = null;
 
     try {
-      const next = await graphQLClient.updateApplicationStatus(jobId, status);
+      const next = await hireTrackService.applications.updateApplicationStatus(jobId, status);
       applications.value = applications.value.some((application) => application.jobId === jobId)
         ? applications.value.map((application) => (application.jobId === jobId ? next : application))
         : [...applications.value, next];
@@ -53,7 +53,7 @@ export const useApplicationsStore = defineStore('applications', () => {
     error.value = null;
 
     try {
-      const next = await graphQLClient.updateApplicationDetails(jobId, input);
+      const next = await hireTrackService.applications.updateApplicationDetails(jobId, input);
       applications.value = applications.value.some((application) => application.jobId === jobId)
         ? applications.value.map((application) => (application.jobId === jobId ? next : application))
         : [...applications.value, next];

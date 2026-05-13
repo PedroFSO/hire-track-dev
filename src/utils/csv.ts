@@ -1,11 +1,24 @@
 import type { Application, JobWithApplication } from '@/types';
 
+const APPLICATIONS_CSV_HEADER = [
+  'Cargo',
+  'Empresa',
+  'Localizacao',
+  'Salario',
+  'Modelo',
+  'Senioridade',
+  'Status',
+  'Proxima entrevista',
+  'Notas',
+  'Atualizado em',
+];
+
 const escapeCsv = (value: string | number | null | undefined) => {
   const text = String(value ?? '');
   return `"${text.replace(/"/g, '""')}"`;
 };
 
-export const exportApplicationsCsv = (jobs: JobWithApplication[], applications: Application[]) => {
+export const buildApplicationsCsv = (jobs: JobWithApplication[], applications: Application[]) => {
   const rows = jobs
     .filter((job) => job.applicationStatus)
     .map((job) => {
@@ -24,20 +37,11 @@ export const exportApplicationsCsv = (jobs: JobWithApplication[], applications: 
       ];
     });
 
-  const header = [
-    'Cargo',
-    'Empresa',
-    'Localização',
-    'Salário',
-    'Modelo',
-    'Senioridade',
-    'Status',
-    'Próxima entrevista',
-    'Notas',
-    'Atualizado em',
-  ];
+  return [APPLICATIONS_CSV_HEADER, ...rows].map((row) => row.map(escapeCsv).join(',')).join('\n');
+};
 
-  const csv = [header, ...rows].map((row) => row.map(escapeCsv).join(',')).join('\n');
+export const exportApplicationsCsv = (jobs: JobWithApplication[], applications: Application[]) => {
+  const csv = buildApplicationsCsv(jobs, applications);
   const blob = new Blob([`\uFEFF${csv}`], { type: 'text/csv;charset=utf-8;' });
   const url = URL.createObjectURL(blob);
   const link = document.createElement('a');
